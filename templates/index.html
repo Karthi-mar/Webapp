@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emotion Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main>
+        <h1>Emotion Detector</h1>
+        <p class="subtitle">Enter some text and see the emotions it expresses.</p>
+
+        <form action="{{ url_for('emotion_detector_route') }}" method="post">
+            <textarea name="text" rows="4" placeholder="Type a sentence...">{{ text or "" }}</textarea>
+            <button type="submit">Detect Emotion</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if result %}
+            <section class="result">
+                <h2>Dominant emotion: <span class="dominant">{{ result.dominant_emotion }}</span></h2>
+                <table>
+                    <thead>
+                        <tr><th>Emotion</th><th>Score</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for emotion, score in result.items() %}
+                            {% if emotion != "dominant_emotion" %}
+                            <tr>
+                                <td>{{ emotion }}</td>
+                                <td>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" style="width: {{ (score * 100) | round(1) }}%"></div>
+                                    </div>
+                                    {{ "%.2f"|format(score) }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
