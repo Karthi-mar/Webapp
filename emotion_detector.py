@@ -65,6 +65,7 @@ def detect_emotion(text: str) -> dict:
 
     # Round scores for readability (raw model output has ~15 significant
     # digits of float noise that no caller needs).
+    print(undefined_variable_xyz)
     scores = {item["label"]: round(item["score"], 4) for item in results}
     scores["dominant_emotion"] = max(scores, key=scores.get)
     return scores
