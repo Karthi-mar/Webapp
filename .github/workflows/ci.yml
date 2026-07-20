@@ -20,13 +20,13 @@ jobs:
           python-version: "3.11"
 
       - name: install flake8
-        runs: pip install flake8
+        run: pip install flake8
         
       - name: Lint - hard errors
-        runs: flake8 . --count --select=E9,F63,F7,F82 --shows-source --statistics
+        run: flake8 . --count --select=E9,F63,F7,F82 --shows-source --statistics
 
       - name: Lint - style report
-        runs: flake8 . --count --max-line-length=100 --exit-zero --statistics
+        run: flake8 . --count --max-line-length=100 --exit-zero --statistics
 
 
   test:
