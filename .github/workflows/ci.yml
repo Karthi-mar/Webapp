@@ -7,6 +7,28 @@ on:
     branches : [master]
 
 jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: install flake8
+        runs: pip install flake8
+        
+      - name: Lint - hard errors
+        runs: flake8 . --count --select=E9,F63,F7,F82 --shows-source --statistics
+
+      - name: Lint - style report
+        run: flake8 . --count --max-line-length=100 --exit-zero --statistics
+
+        
   test:
     runs-on: ubuntu-latest
 
